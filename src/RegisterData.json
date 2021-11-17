@@ -1,0 +1,19 @@
+{
+  "UserData": [
+    {
+      "name": "shubham",
+      "email":"sahu@gmail.com",
+      "password":"1234"
+    },
+    {
+      "name": "vishal",
+      "email":"vishal@gmail.com",
+      "password":"1234"
+    },
+    {
+      "name": "harsh",
+      "email":"harsh@gmail.com",
+      "password":"1234"
+    }
+  ]
+}

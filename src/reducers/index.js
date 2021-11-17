@@ -1,13 +1,18 @@
 import { combineReducers } from "redux";
+import { UserData } from "../RegisterData.json";
 
-const InitialState = { name: "", email: "", password: "" };
+// state.push({
+//   name: action.payload.name,
+//   email: action.payload.email,
+//   password: action.payload.password,
+// });
+
+let InitialState = UserData;
 const formReducer = (state = InitialState, action) => {
   console.log(action);
   switch (action.type) {
     case "Sign_up":
-      return action.payload;
-    case "Sign_in":
-      return action.payload;
+      return [...state, action.payload];
     default:
       return state;
   }

@@ -8,9 +8,3 @@ export const signup = (name, email, password) => {
     },
   };
 };
-
-export const signin = () => {
-  return {
-    type: "Sign_in",
-  };
-};

@@ -1,28 +1,28 @@
-import React from 'react';
-import Pagination from '@mui/material/Pagination';
+import React from "react";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
-const Dashboard = () => {
-    return (
-        <div style={appStyle}>
-            <div>
-                <label style={headingStyle}>Dashboard</label>
-                {/* <Pagination count={10} /> */}
-            </div>
-        </div>
-    );
+export default function Dashboard(props) {
+  const { state } = useLocation();
+  const { name, email } = state;
+  return (
+    <div>
+      <p>{email}</p>
+      <p>Welcome {name} to my app</p>
+      <Link to="./SignIn">Logout</Link>
+    </div>
+  );
 }
 
 const appStyle = {
-    display: 'flex',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    width: '100vw',
-    height: '100vh'
+  display: "flex",
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  width: "100vw",
+  height: "100vh",
 };
 
 const headingStyle = {
-    fontSize: 20,
-    fontWeight: 'bold'
+  fontSize: 20,
+  fontWeight: "bold",
 };
-
-export default Dashboard;
