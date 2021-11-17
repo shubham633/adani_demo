@@ -1,26 +1,18 @@
-import React from "react";
-import { BrowserRouter, useRoutes } from "react-router-dom";
-import Home from "./screens/Home";
-import SignUp from "./screens/SignUp";
-import SignIn from "./screens/SignIn";
-import Dashboard from "./screens/Dashboard";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './screens/Home';
+import Dashboard from './screens/Dashboard';
+import SignUp from './screens/SignUp';
 
 const App = () => {
-  let routes = useRoutes([
-    { path: "/", element: <Home /> },
-    { path: "/SignUp", element: <SignUp /> },
-    { path: "/SignIn", element: <SignIn /> },
-    { path: "/SignIn/Dashboard", element: <Dashboard /> },
-  ]);
-  return routes;
+    return (
+        <Router>
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/Home/Dashboard' element={<Dashboard />} />
+                <Route path='/SignUp' element={<SignUp />} />
+            </Routes>
+        </Router>
+    );
 };
-
-const AppWrapper = () => {
-  return (
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-};
-
-export default AppWrapper;
+export default App;
