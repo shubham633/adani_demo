@@ -79,10 +79,4 @@ const formStyle = {
   marginLeft: '8%'
 };
 
-const headingStyle = {
-  fontSize: 40,
-  color: '#fff',
-  fontWeight: "bold",
-};
-
 export default connect(mapStateToProps)(Home);

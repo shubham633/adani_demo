@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button } from "@mui/material";
 import { sorting } from "../actions";
@@ -10,7 +10,11 @@ const Admin = (props) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   props.currentuser(state);
-
+  useEffect(() => {
+    if (state === null) {
+      navigate('/SignIn')
+    }
+  })
   const sorted = (sortingData, sortBy) => {
     sortBy === "name"
       ? sortingData.sort((userA, userB) => {
@@ -46,9 +50,10 @@ const Admin = (props) => {
           backgroundColor: "#E8F5E9",
           margin: '15px 0 0 0'
         }}
+        key={item.email}
       >
-        <p key={item.name} style={{ color: '#616161' }}>{item.name}</p>
-        <p key={item.email} style={{ color: "#616161" }}>
+        <p style={{ color: '#616161' }}>{item.name}</p>
+        <p style={{ color: "#616161" }}>
           {item.email}
         </p>
       </div>
@@ -57,10 +62,10 @@ const Admin = (props) => {
   return (
     <div style={appStyle}>
       <div style={{ padding: 20 }}>
-        <div style={{ flexDirection: 'row'}}>
+        <div style={{ flexDirection: 'row' }}>
           <label style={{ fontSize: 22, fontWeight: "bold", }}>Sort By: </label>
           <Button
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
               setIsSorted(false);
@@ -69,7 +74,7 @@ const Admin = (props) => {
             default
           </Button>
           <Button
-            style={{marginRight: 10}}
+            style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
               let nameSortingData = Object.assign([], props.userData);
@@ -102,7 +107,7 @@ const Admin = (props) => {
               Home
             </Button>
             <Button
-              style={{marginLeft: 10}}
+              style={{ marginLeft: 10 }}
               variant="contained"
               color={'error'}
               onClick={() => {
@@ -135,7 +140,6 @@ const mapStateToProps = (state) => {
   return {
     userData: state.formReducer,
     sortData: state.sortReducer,
-    currentuserData: state.userReducer,
   };
 };
 

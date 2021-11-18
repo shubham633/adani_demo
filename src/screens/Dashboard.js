@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { connect } from "react-redux";
 import { currentuser } from "../actions";
@@ -6,10 +6,7 @@ import Button from "@mui/material/Button";
 
 const Container = ({ props }) => {
     const { state } = useLocation();
-    const { name, email } = state;
     const navigate = useNavigate();
-    props.currentuser(state);
-    console.log(props);
     return (
         <div style={{ padding: 20 }}>
             <div style={headingContainer}>
@@ -21,8 +18,8 @@ const Container = ({ props }) => {
                     <label style={userdata}> E-mail Address:</label>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 40 }}>
-                    <label style={uservalue}>{name}</label>
-                    <label style={uservalue}>{email}</label>
+                    <label style={uservalue}>{state !== null ? state.name : null}</label>
+                    <label style={uservalue}>{state !== null ? state.email : null}</label>
                 </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -325 }}>
@@ -54,6 +51,14 @@ const Container = ({ props }) => {
 };
 
 const Dashboard = (props) => {
+    const { state } = useLocation();
+    useEffect(() => {
+        if (state === null) {
+            navigate("/SignIn");
+        }
+    });
+    const navigate = useNavigate();
+    props.currentuser(state);
     return (
         <div style={appStyle}>
             <Container props={props} />
@@ -62,7 +67,7 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    return state.userReducer;
+    return state
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);
 
