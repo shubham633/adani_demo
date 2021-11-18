@@ -21,10 +21,13 @@ const Form = ({ props }) => {
     if (registeredUser?.email) {
       console.log("user already exists");
       alert("This email id is already registered");
+    } else if (email === "admin@gmail.com") {
+      console.log("user already exists");
+      alert("This email id is already registered");
     } else {
       props.signup(name, email, password);
       console.log("registeration success");
-      navigate("/Dashboard", { state: { name, email } });
+      navigate("/Dashboard", { state: { name, email, password } });
     }
   };
 
@@ -45,6 +48,7 @@ const Form = ({ props }) => {
             id="outlined-basic"
             label="Username"
             autoComplete="off"
+            type="text"
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -55,6 +59,7 @@ const Form = ({ props }) => {
             id="outlined-basic"
             label="E-mail"
             autoComplete="off"
+            type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}

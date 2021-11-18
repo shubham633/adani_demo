@@ -1,18 +1,38 @@
 import React from "react";
-import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router";
+import { connect } from "react-redux";
+import { currentuser } from "../actions";
+import Button from "@mui/material/Button";
 
-export default function Dashboard(props) {
+const Dashboard = (props) => {
   const { state } = useLocation();
   const { name, email } = state;
+  const navigate = useNavigate();
+  props.currentuser(state);
+  console.log(props);
   return (
     <div>
       <p>{email}</p>
       <p>Welcome {name} to my app</p>
-      <Link to="./SignIn">Logout</Link>
+      <Button
+        variant="text"
+        size="medium"
+        onClick={() => {
+          props.currentuser({});
+          navigate("/");
+        }}
+      >
+        Logout
+      </Button>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return state.userReducer;
+};
+export default connect(mapStateToProps, { currentuser })(Dashboard);
 
 const appStyle = {
   display: "flex",

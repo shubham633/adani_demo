@@ -18,6 +18,27 @@ const formReducer = (state = InitialState, action) => {
   }
 };
 
+const userReducer = (state = {}, action) => {
+  console.log(action);
+  switch (action.type) {
+    case "Current_user":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const sortReducer = (state = InitialState, action) => {
+  switch (action.type) {
+    case "Sort":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   formReducer,
+  userReducer,
+  sortReducer
 });

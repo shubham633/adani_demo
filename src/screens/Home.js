@@ -17,10 +17,13 @@ const Form = ({ props }) => {
     const validUser = props.formValue.find(
       (item) => item.email === email && item.password === password
     );
-    console.log(validUser);
     if (validUser?.email && validUser?.password) {
       navigate("/Dashboard", {
-        state: { name: validUser.name, email: validUser.email },
+        state: {
+          name: validUser.name,
+          email: validUser.email,
+          password: validUser.password,
+        },
       });
     } else if (email === "admin@gmail.com" && password === "admin1234") {
       console.log("admin");
@@ -40,6 +43,7 @@ const Form = ({ props }) => {
           <TextField
             id="outlined-required"
             label="Enter Email Address"
+            type="email"
             required
             autoComplete="off"
             value={email}
@@ -80,8 +84,10 @@ const Form = ({ props }) => {
   );
 };
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     formValue: state.formReducer,
+    user: state.userReducer,
   };
 };
 

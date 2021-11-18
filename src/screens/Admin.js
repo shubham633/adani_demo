@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import Button from "@mui/material/Button";
+import { sortByName } from "../actions";
 
 const Admin = (props) => {
   const [isSorted, setIsSorted] = useState(false);
-  const [userInfo, setUserInfo] = useState(props.userData);
-  const sortName = () => {
-    userInfo.sort((userA, userB) => {
+  const sortName = (sortingData) => {
+    console.log('sorted')
+    sortingData.sort((userA, userB) => {
       var nameA = userA.name.toUpperCase();
       var nameB = userB.name.toUpperCase();
       if (nameA < nameB) {
@@ -21,15 +22,16 @@ const Admin = (props) => {
 
   return (
     <div>
-      {userInfo.map((item) => (
-        <p key={item.email}>{item.name}</p>
-      ))}
+      {isSorted
+        ? props.sortData.map((item) => <p key={item.email}>{item.name}</p>)
+        : props.userData.map((item) => <p key={item.email}>{item.name}</p>)}
       <Button
         variant="contained"
         onClick={() => {
-          sortName();
-          setIsSorted(true);
-          setUserInfo(userInfo);
+          let sortingData=Object.assign([], props.userData)
+          sortName(sortingData);
+          props.sortByName(sortingData);
+          setIsSorted(!isSorted);
         }}
       >
         Sort By Name
@@ -39,7 +41,7 @@ const Admin = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { userData: state.formReducer };
+  return { userData: state.formReducer, sortData: state.sortReducer };
 };
 
-export default connect(mapStateToProps)(Admin);
+export default connect(mapStateToProps, { sortByName })(Admin);
