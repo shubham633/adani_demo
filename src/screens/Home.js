@@ -26,10 +26,8 @@ const Form = ({ props }) => {
         },
       });
     } else if (email === "admin@gmail.com" && password === "admin1234") {
-      console.log("admin");
-      navigate("/Admin");
+      navigate("/Admin", { state: { email, password } });
     } else {
-      console.log("please enter valid credentials");
       alert("Please enter valid email id or password");
     }
   };
@@ -84,7 +82,6 @@ const Form = ({ props }) => {
   );
 };
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     formValue: state.formReducer,
     user: state.userReducer,

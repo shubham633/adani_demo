@@ -9,7 +9,6 @@ const Dashboard = (props) => {
   const { name, email } = state;
   const navigate = useNavigate();
   props.currentuser(state);
-  console.log(props);
   return (
     <div>
       <p>{email}</p>
@@ -29,7 +28,6 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return state.userReducer;
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);

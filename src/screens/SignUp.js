@@ -19,14 +19,11 @@ const Form = ({ props }) => {
   const registerUser = () => {
     const registeredUser = props.formValue.find((item) => item.email === email);
     if (registeredUser?.email) {
-      console.log("user already exists");
       alert("This email id is already registered");
     } else if (email === "admin@gmail.com") {
-      console.log("user already exists");
       alert("This email id is already registered");
     } else {
       props.signup(name, email, password);
-      console.log("registeration success");
       navigate("/Dashboard", { state: { name, email, password } });
     }
   };
