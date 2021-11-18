@@ -24,7 +24,7 @@ const Form = ({ props }) => {
       alert("This email id is already registered");
     } else {
       props.signup(name, email, password);
-      navigate("/Dashboard", { state: { name, email, password } });
+      navigate("/SignIn/Dashboard", { state: { name, email, password } });
     }
   };
 
@@ -96,7 +96,7 @@ const Form = ({ props }) => {
           variant="text"
           color="success"
           size="medium"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/SignIn")}
         >
           Login
         </Button>

@@ -96,10 +96,19 @@ const Admin = (props) => {
         size="medium"
         onClick={() => {
           props.currentuser({});
-          navigate("/");
+          navigate("/SignIn");
         }}
       >
         Logout
+      </Button>
+      <Button
+        variant="text"
+        size="medium"
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        Home
       </Button>
       {isSorted
         ? props.sortData.map((item) => userInfo(item))
