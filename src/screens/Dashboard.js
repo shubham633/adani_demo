@@ -25,14 +25,25 @@ const Container = ({ props }) => {
                     <label style={uservalue}>{email}</label>
                 </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -325  }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -325 }}>
                 <Button
+                    color={'success'}
+                    variant="contained"
+                    size="medium"
+                    onClick={() => {
+                        navigate("/");
+                    }}
+                >
+                    Home
+                </Button>
+                <Button
+                    style={{ marginLeft: 10 }}
                     variant="contained"
                     size="medium"
                     color="error"
                     onClick={() => {
                         props.currentuser({});
-                        navigate("/");
+                        navigate("/SignIn");
                     }}
                 >
                     Logout
@@ -51,7 +62,6 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return state.userReducer;
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);

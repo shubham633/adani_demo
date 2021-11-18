@@ -16,7 +16,7 @@ export const currentuser = (userData) => {
   };
 };
 
-export const sortByName = (userData) => {
+export const sorting = (userData) => {
   return {
     type: "Sort",
     payload: userData

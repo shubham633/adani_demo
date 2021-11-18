@@ -19,15 +19,12 @@ const Form = ({ props }) => {
     const registerUser = () => {
         const registeredUser = props.formValue.find((item) => item.email === email);
         if (registeredUser?.email) {
-            console.log("user already exists");
-            alert("This email id is already registered");
+            alert("This E-mail Id is already registered!");
         } else if (email === "admin@gmail.com") {
-            console.log("user already exists");
-            alert("This email id is already registered");
+            alert("This E-mail Id is already registered!");
         } else {
             props.signup(name, email, password);
-            console.log("registeration success");
-            navigate("/Dashboard", { state: { name, email, password } });
+            navigate("/SignIn/Dashboard", { state: { name, email, password } });
         }
     };
 
@@ -99,7 +96,7 @@ const Form = ({ props }) => {
                     variant="text"
                     color="success"
                     size="medium"
-                    onClick={() => navigate("/")}
+                    onClick={() => navigate("/SignIn")}
                 >
                     Login
                 </Button>
