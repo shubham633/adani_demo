@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { connect } from "react-redux";
 import { currentuser } from "../actions";
@@ -6,13 +6,17 @@ import Button from "@mui/material/Button";
 
 const Dashboard = (props) => {
   const { state } = useLocation();
-  const { name, email } = state;
+  useEffect(() => {
+    if (state === null) {
+      navigate("/SignIn");
+    }
+  });
   const navigate = useNavigate();
   props.currentuser(state);
   return (
     <div>
-      <p>{email}</p>
-      <p>Welcome {name} to my app</p>
+      <p>{state!==null?state.name:null}</p>
+      <p>Welcome {state!==null?state.email:null} to my app</p>
       <Button
         variant="text"
         size="medium"
@@ -37,19 +41,7 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return state.userReducer;
+  return state;
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);
 
-const appStyle = {
-  display: "flex",
-  backgroundPosition: "center",
-  backgroundSize: "cover",
-  width: "100vw",
-  height: "100vh",
-};
-
-const headingStyle = {
-  fontSize: 20,
-  fontWeight: "bold",
-};

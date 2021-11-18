@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button } from "@mui/material";
 import { sorting } from "../actions";
@@ -10,7 +10,11 @@ const Admin = (props) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   props.currentuser(state);
-
+  useEffect(()=>{
+    if(state===null){
+      navigate('/SignIn')
+    }
+  })
   const sorted = (sortingData, sortBy) => {
     sortBy === "name"
       ? sortingData.sort((userA, userB) => {
@@ -48,11 +52,10 @@ const Admin = (props) => {
           marginLeft: 20,
           marginRight: 20,
         }}
+        key={item.email}
       >
-        <p key={item.name}>{item.name}</p>
-        <p key={item.email} style={{ color: "red" }}>
-          {item.email}
-        </p>
+        <p>{item.name}</p>
+        <p style={{ color: "red" }}>{item.email}</p>
       </div>
     );
   };
@@ -121,7 +124,6 @@ const mapStateToProps = (state) => {
   return {
     userData: state.formReducer,
     sortData: state.sortReducer,
-    currentuserData: state.userReducer,
   };
 };
 
