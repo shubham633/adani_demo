@@ -45,8 +45,8 @@ const Admin = (props) => {
           justifyContent: "space-around",
           backgroundColor: "lightgray",
           margin: 2,
-          marginLeft:20,
-          marginRight:20
+          marginLeft: 20,
+          marginRight: 20,
         }}
       >
         <p key={item.name}>{item.name}</p>
@@ -109,7 +109,11 @@ const Admin = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { userData: state.formReducer, sortData: state.sortReducer , currentuserData:state.userReducer};
+  return {
+    userData: state.formReducer,
+    sortData: state.sortReducer,
+    currentuserData: state.userReducer,
+  };
 };
 
 export default connect(mapStateToProps, { sorting, currentuser })(Admin);
