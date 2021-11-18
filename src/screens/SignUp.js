@@ -27,7 +27,7 @@ const Form = ({ props }) => {
     } else {
       props.signup(name, email, password);
       console.log("registeration success");
-      navigate("/Dashboard", { state: { name, email, password } });
+      navigate("/SignIn/Dashboard", { state: { name, email, password } });
     }
   };
 
@@ -99,7 +99,7 @@ const Form = ({ props }) => {
           variant="text"
           color="success"
           size="medium"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/SignIn")}
         >
           Login
         </Button>
