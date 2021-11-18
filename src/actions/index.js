@@ -19,6 +19,6 @@ export const currentuser = (userData) => {
 export const sortByName = (userData) => {
   return {
     type: "Sort",
-    payload:userData
+    payload: userData
   };
 };

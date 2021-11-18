@@ -28,7 +28,7 @@ const Admin = (props) => {
       <Button
         variant="contained"
         onClick={() => {
-          let sortingData=Object.assign([], props.userData)
+          let sortingData = Object.assign([], props.userData)
           sortName(sortingData);
           props.sortByName(sortingData);
           setIsSorted(!isSorted);
