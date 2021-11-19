@@ -3,20 +3,17 @@
     {
       "name": "shubham",
       "email":"c@gmail.com",
-      "password":"1234",
-      "profession":""
+      "password":"1234"
     },
     {
       "name": "vishal",
       "email":"a@gmail.com",
-      "password":"1234",
-      "profession":""
+      "password":"1234"
     },
     {
       "name": "harsh",
       "email":"b@gmail.com",
-      "password":"1234",
-      "profession":""
+      "password":"1234"
     }
   ]
 }

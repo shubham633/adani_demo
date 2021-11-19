@@ -14,9 +14,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { currentuser } from "../actions";
 
 const theme = createTheme();
-import { currentuser } from "../actions";
 
 const Form = ({ props, navigate }) => {
   const [email, setEmail] = useState("");
@@ -145,27 +145,6 @@ const SignIn = (props) => {
       <Form props={props} navigate={navigate} />
     </div>
   );
-};
-const appStyle = {
-  display: "flex",
-  backgroundPosition: "center",
-  backgroundSize: "cover",
-  width: "100vw",
-  height: "100vh",
-  backgroundImage: `url("https://images.unsplash.com/photo-1508615039623-a25605d2b022?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80")`,
-};
-
-const formStyle = {
-  padding: 50,
-  margin: "10% 0 0 5%",
-  display: "block",
-};
-
-const headingStyle = {
-  fontFamily: "Arial, Helvetica, sans-serif",
-  fontSize: 25,
-  fontWeight: "bold",
-  margin: "0 0 20px 0",
 };
 
 export default connect(mapStateToProps, { currentuser })(SignIn);

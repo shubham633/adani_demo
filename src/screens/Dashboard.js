@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 const Container = ({ props, navigate }) => {
   let userName = props.user?.name;
   let userEmail = props.user?.email;
- // console.log(localStorage.getItem("userInfo"));
 
   return (
     <div style={{ padding: 20 }}>
@@ -58,7 +57,6 @@ const Container = ({ props, navigate }) => {
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
-  console.log(props)
   useEffect(() => {
     if (props.user === null) {
       navigate("/SignIn");
@@ -72,7 +70,7 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.userReducer, formValue:state.formReducer };
+  return { user: state.userReducer };
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);
 
