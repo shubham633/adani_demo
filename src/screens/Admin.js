@@ -29,27 +29,27 @@ const Admin = (props) => {
   const sorted = (sortBy) => {
     sortBy === "name"
       ? props.userData.sort((userA, userB) => {
-          var nameA = userA.name.toUpperCase();
-          var nameB = userB.name.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        })
+        var nameA = userA.name.toUpperCase();
+        var nameB = userB.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      })
       : props.userData.sort((userA, userB) => {
-          var emailA = userA.email.toUpperCase();
-          var emailB = userB.email.toUpperCase();
-          if (emailA < emailB) {
-            return -1;
-          }
-          if (emailA > emailB) {
-            return 1;
-          }
-          return 0;
-        });
+        var emailA = userA.email.toUpperCase();
+        var emailB = userB.email.toUpperCase();
+        if (emailA < emailB) {
+          return -1;
+        }
+        if (emailA > emailB) {
+          return 1;
+        }
+        return 0;
+      });
   };
 
   const userInfo = (item, index) => {
@@ -235,14 +235,10 @@ Admin.propTypes = {
   window: PropTypes.func,
 };
 
-<<<<<<< HEAD
-export default Admin;
-
-=======
 const mapStateToProps = (state) => {
   return {
     userData: state.formReducer,
-   // sortData: state.sortReducer,
+    // sortData: state.sortReducer,
     user: state.userReducer,
   };
 };
@@ -262,4 +258,3 @@ export default connect(mapStateToProps, {
   deleteUser,
   updateUser,
 })(Admin);
->>>>>>> 9ada571aca024ff0586f807ea94bfebc6c19aeb1
