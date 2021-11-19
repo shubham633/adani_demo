@@ -11,14 +11,13 @@ const mapStateToProps = (state) => {
 
 function Home(props) {
   const navigate = useNavigate();
+  let userEmail = props.user?.email;
+  let userPassword = props.user?.password;
   const checkLogin = () => {
-    if (
-      props.user?.email === "admin@gmail.com" &&
-      props.user?.password === "admin1234"
-    ) {
-      navigate("/SignIn/Admin", { state: props.user });
-    } else if (props.user?.email && props.user?.password) {
-      navigate("/SignIn/Dashboard", { state: props.user });
+    if (userEmail === "admin@gmail.com" && userPassword === "admin1234") {
+      navigate("/SignIn/Admin");
+    } else if (userEmail && userPassword) {
+      navigate("/SignIn/Dashboard");
     } else {
       navigate("/SignIn");
     }
@@ -26,7 +25,14 @@ function Home(props) {
   return (
     <div style={appStyle}>
       <div style={formStyle}>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingTop: '12%' }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            paddingTop: "12%",
+          }}
+        >
           <div style={{ paddingRight: 40 }}>
             <Button
               variant="contained"
@@ -36,13 +42,11 @@ function Home(props) {
                 checkLogin();
               }}
             >
-              {props.user?.email && props.user?.password
-                ? "Go to Dashboard"
-                : "Login"}
+              {userEmail && userPassword ? "Go to Dashboard" : "Login"}
             </Button>
           </div>
           <div>
-            {props.user?.email && props.user?.password ? null : (
+            {userEmail && userPassword ? null : (
               <Button
                 variant="contained"
                 color="secondary"
@@ -57,15 +61,15 @@ function Home(props) {
       </div>
     </div>
   );
-};
+}
 
 const appStyle = {
-  display: 'flex',
+  display: "flex",
   backgroundPosition: "center",
   backgroundSize: "cover",
   width: "100vw",
   height: "100vh",
-  backgroundImage: `url("https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`
+  backgroundImage: `url("https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
 };
 
 const formStyle = {
@@ -75,8 +79,8 @@ const formStyle = {
   opacity: 0.8,
   width: "320px",
   height: "120px",
-  marginTop: '18%',
-  marginLeft: '8%'
+  marginTop: "18%",
+  marginLeft: "8%",
 };
 
 export default connect(mapStateToProps)(Home);

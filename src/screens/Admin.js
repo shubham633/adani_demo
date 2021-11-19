@@ -1,244 +1,161 @@
-// import React, { useState, useEffect } from "react";
-// import { connect } from "react-redux";
-// import { Button } from "@mui/material";
-// import { sorting } from "../actions";
-// import { currentuser } from "../actions";
-// import { useLocation, useNavigate } from "react-router";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Button, TextField } from "@mui/material";
+import {
+  sortByName,
+  sortByEmail,
+  deleteUser,
+  updateUser,
+  currentuser,
+} from "../actions";
+import { useNavigate } from "react-router";
 
-// const Admin = (props) => {
-//   const [isSorted, setIsSorted] = useState(false);
-//   const { state } = useLocation();
-//   const navigate = useNavigate();
-//   props.currentuser(state);
-//   useEffect(() => {
-//     if (state === null) {
-//       navigate('/SignIn')
-//     }
-//   })
-//   const sorted = (sortingData, sortBy) => {
-//     sortBy === "name"
-//       ? sortingData.sort((userA, userB) => {
-//         var nameA = userA.name.toUpperCase();
-//         var nameB = userB.name.toUpperCase();
-//         if (nameA < nameB) {
-//           return -1;
-//         }
-//         if (nameA > nameB) {
-//           return 1;
-//         }
-//         return 0;
-//       })
-//       : sortingData.sort((userA, userB) => {
-//         var emailA = userA.email.toUpperCase();
-//         var emailB = userB.email.toUpperCase();
-//         if (emailA < emailB) {
-//           return -1;
-//         }
-//         if (emailA > emailB) {
-//           return 1;
-//         }
-//         return 0;
-//       });
-//   };
-
-//   const userInfo = (item) => {
-//     return (
-//       <div
-//         style={{
-//           display: "flex",
-//           justifyContent: "space-around",
-//           backgroundColor: "#E8F5E9",
-//           margin: '15px 0 0 0'
-//         }}
-//         key={item.email}
-//       >
-//         <p style={{ color: '#616161' }}>{item.name}</p>
-//         <p style={{ color: "#616161" }}>
-//           {item.email}
-//         </p>
-//       </div>
-//     );
-//   };
-//   return (
-//     <div style={appStyle}>
-//       <div style={{ padding: 20 }}>
-//         <div style={{ flexDirection: 'row' }}>
-//           <label style={{ fontSize: 22, fontWeight: "bold", }}>Sort By: </label>
-//           <Button
-//             style={{ marginRight: 10 }}
-//             variant="contained"
-//             onClick={() => {
-//               setIsSorted(false);
-//             }}
-//           >
-//             default
-//           </Button>
-//           <Button
-//             style={{ marginRight: 10 }}
-//             variant="contained"
-//             onClick={() => {
-//               let nameSortingData = Object.assign([], props.userData);
-//               sorted(nameSortingData, "name");
-//               props.sorting(nameSortingData);
-//               setIsSorted(true);
-//             }}
-//           >
-//             name
-//           </Button>
-//           <Button
-//             variant="contained"
-//             onClick={() => {
-//               let emailSortingData = Object.assign([], props.userData);
-//               sorted(emailSortingData, "email");
-//               props.sorting(emailSortingData);
-//               setIsSorted(true);
-//             }}
-//           >
-//             e-mail
-//           </Button>
-//           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -40 }}>
-//             <Button
-//               variant="contained"
-//               color={'success'}
-//               onClick={() => {
-//                 navigate("/");
-//               }}
-//             >
-//               Home
-//             </Button>
-//             <Button
-//               style={{ marginLeft: 10 }}
-//               variant="contained"
-//               color={'error'}
-//               onClick={() => {
-//                 props.currentuser({});
-//                 navigate("/SignIn");
-//               }}
-//             >
-//               Logout
-//             </Button>
-//           </div>
-//         </div>
-//         <div style={{
-//           display: "flex",
-//           justifyContent: "space-around",
-//           backgroundColor: "#E8F5E9",
-//           margin: '15px 0 0 0'
-//         }}>
-//           <p style={{ fontWeight: 'bold', fontSize: 18 }}>User Name</p>
-//           <p style={{ fontWeight: 'bold', fontSize: 18 }}>User E-mail</p>
-//         </div>
-//         {isSorted
-//           ? props.sortData.map((item) => userInfo(item))
-//           : props.userData.map((item) => userInfo(item))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// const mapStateToProps = (state) => {
-//   return {
-//     userData: state.formReducer,
-//     sortData: state.sortReducer,
-//   };
-// };
-
-// const appStyle = {
-//   backgroundPosition: "center",
-//   backgroundSize: "cover",
-//   width: "100vw",
-//   height: "100vh",
-//   backgroundImage: `url("https://images.pexels.com/photos/82256/pexels-photo-82256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`
-// };
-
-// export default connect(mapStateToProps, { sorting, currentuser })(Admin);
-
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import BuildIcon from '@mui/icons-material/Build';
-import List from '@mui/material/List';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import ListItemButton from '@mui/material/ListItemButton';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-import Collapse from '@mui/material/Collapse';
-
-const drawerWidth = 240;
-
-function Admin(props) {
-  const [open, setOpen] = React.useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-  const [open1, setOpen1] = React.useState(true);
-
-  const handleClick1 = () => {
-    setOpen1(!open1);
-  };
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+const Admin = (props) => {
+  const [isSorted, setIsSorted] = useState(false);
+  // const [sortData, setSortData] = useState(null);
+  // const [searchUser, setSearchUser] = useState("");
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   setSortData(props.userData);
+  // });
+  console.log(props);
+  useEffect(() => {
+    if (props.user === null) {
+      navigate("/SignIn");
+    }
+  });
+  // localStorage.setItem("userInfo", "formReducer");
+  // console.log(localStorage.getItem("userInfo"));
+  const sorted = (sortBy) => {
+    sortBy === "name"
+      ? props.userData.sort((userA, userB) => {
+          var nameA = userA.name.toUpperCase();
+          var nameB = userB.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        })
+      : props.userData.sort((userA, userB) => {
+          var emailA = userA.email.toUpperCase();
+          var emailB = userB.email.toUpperCase();
+          if (emailA < emailB) {
+            return -1;
+          }
+          if (emailA > emailB) {
+            return 1;
+          }
+          return 0;
+        });
   };
 
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        <ListItemButton onClick={handleClick}>
-          <ListItemIcon>
-            <PersonOutlineIcon />
-          </ListItemIcon>
-          <ListItemText primary="Users" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <FormatListBulletedIcon />
-              </ListItemIcon>
-              <ListItemText primary="List" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-      </List>
-      <Divider />
-      <List>
-        <ListItemButton onClick={handleClick1}>
-          <ListItemIcon>
-            <BuildIcon />
-          </ListItemIcon>
-          <ListItemText primary="Tools" />
-          {open1 ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open1} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="Starred" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-      </List>
+  const userInfo = (item, index) => {
+    //console.log(item);
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          backgroundColor: "#E8F5E9",
+          margin: "15px 0 0 0",
+        }}
+        key={item.email}
+      >
+        <p style={{ color: "#616161" }}>{item.name}</p>
+        <p style={{ color: "#616161" }}>{item.email}</p>
+        <Button onClick={() => props.deleteUser(index)}>Delete</Button>
+        <Button onClick={() => props.updateUser(index)}>Edit</Button>
+      </div>
+    );
+  };
+  return (
+    <div style={appStyle}>
+      <div style={{ padding: 20 }}>
+        <div style={{ flexDirection: "row" }}>
+          <label style={{ fontSize: 22, fontWeight: "bold" }}>Sort By: </label>
+          <Button
+            style={{ marginRight: 10 }}
+            variant="contained"
+            onClick={() => {
+              setIsSorted(false);
+            }}
+          >
+            default
+          </Button>
+          <Button
+            style={{ marginRight: 10 }}
+            variant="contained"
+            onClick={() => {
+              //let nameSortingData =props.userData
+              let nameSort = sorted("name");
+              console.log(nameSort);
+              props.sortByName(props.userData);
+              // setSortData();
+              setIsSorted(true);
+            }}
+          >
+            name
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              // Object.assign([], props.userData);
+              // let emailSortingData = props.userData;
+              let emailSort = sorted("email");
+
+              props.sortByEmail(props.userData);
+              setIsSorted(true);
+            }}
+          >
+            e-mail
+          </Button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: -40,
+            }}
+          >
+            <Button
+              variant="contained"
+              color={"success"}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Home
+            </Button>
+            <Button
+              style={{ marginLeft: 10 }}
+              variant="contained"
+              color={"error"}
+              onClick={() => {
+                props.currentuser(null);
+                navigate("/SignIn");
+              }}
+            >
+              Logout
+            </Button>
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "#E8F5E9",
+            margin: "15px 0 0 0",
+          }}
+        >
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>User Name</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>User E-mail</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Delete</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Edit</p>
+        </div>
+        {props.userData.map((item, index) => userInfo(item, index))}
+      </div>
     </div>
   );
 
@@ -318,5 +235,31 @@ Admin.propTypes = {
   window: PropTypes.func,
 };
 
+<<<<<<< HEAD
 export default Admin;
 
+=======
+const mapStateToProps = (state) => {
+  return {
+    userData: state.formReducer,
+   // sortData: state.sortReducer,
+    user: state.userReducer,
+  };
+};
+
+const appStyle = {
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  width: "100vw",
+  height: "100vh",
+  backgroundImage: `url("https://images.pexels.com/photos/82256/pexels-photo-82256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
+};
+
+export default connect(mapStateToProps, {
+  sortByName,
+  sortByEmail,
+  currentuser,
+  deleteUser,
+  updateUser,
+})(Admin);
+>>>>>>> 9ada571aca024ff0586f807ea94bfebc6c19aeb1

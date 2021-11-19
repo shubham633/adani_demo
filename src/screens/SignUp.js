@@ -3,30 +3,32 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { useNavigate } from "react-router";
 import { connect } from "react-redux";
-import { signup } from "../actions";
+import { signup, currentuser } from "../actions";
 
 const Form = ({ props }) => {
-    const navigate = useNavigate();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        registerUser();
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    registerUser();
+  };
 
-    const registerUser = () => {
-        const registeredUser = props.formValue.find((item) => item.email === email);
-        if (registeredUser?.email) {
-            alert("This E-mail Id is already registered!");
-        } else if (email === "admin@gmail.com") {
-            alert("This E-mail Id is already registered!");
-        } else {
-            props.signup(name, email, password);
-            navigate("/SignIn/Dashboard", { state: { name, email, password } });
-        }
-    };
+  const registerUser = () => {
+    const registeredUser = props.formValue.find((item) => item.email === email);
+    if (registeredUser?.email) {
+      alert("This E-mail Id is already registered!");
+    } else if (email === "admin@gmail.com") {
+      alert("This E-mail Id is already registered!");
+    } else {
+      props.signup(name, email, password);
+      props.currentuser({ name, email, password });
+     // localStorage.setItem("userInfo",props.formValue);
+      navigate("/SignIn/Dashboard");
+    }
+  };
 
     return (
         <form style={formStyle} onSubmit={handleSubmit}>
@@ -107,51 +109,51 @@ const Form = ({ props }) => {
 };
 
 const mapStateToProps = (state) => {
-    return {
-        formValue: state.formReducer,
-    };
+  return {
+    formValue: state.formReducer,
+  };
 };
 
 const SignUp = (props) => {
-    return (
-        <div style={appStyle}>
-            <Form props={props} />
-        </div>
-    );
+  return (
+    <div style={appStyle}>
+      <Form props={props} />
+    </div>
+  );
 };
 
 const appStyle = {
-    display: "flex",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: `url("https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1169&q=80")`,
+  display: "flex",
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  width: "100vw",
+  height: "100vh",
+  backgroundImage: `url("https://images.unsplash.com/photo-1497864149936-d3163f0c0f4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1169&q=80")`,
 };
 
 const formStyle = {
-    padding: 50,
-    margin: "10% 0 0 70%",
-    display: "block",
-    border: "1px solid #c9c9c9",
-    borderRadius: "5px",
-    background: "#f5f5f5",
-    opacity: 0.8,
-    width: "250px",
-    height: "320px",
+  padding: 50,
+  margin: "10% 0 0 70%",
+  display: "block",
+  border: "1px solid #c9c9c9",
+  borderRadius: "5px",
+  background: "#f5f5f5",
+  opacity: 0.8,
+  width: "250px",
+  height: "320px",
 };
 
 const headingStyle = {
-    fontFamily: "Arial, Helvetica, sans-serif",
-    fontSize: 25,
-    fontWeight: "bold",
-    margin: "0 0 20px 0",
+  fontFamily: "Arial, Helvetica, sans-serif",
+  fontSize: 25,
+  fontWeight: "bold",
+  margin: "0 0 20px 0",
 };
 
 const lableStyle = {
-    fontFamily: "Arial, Helvetica, sans-serif",
-    fontSize: 14,
-    margin: "10px 0 0 0",
+  fontFamily: "Arial, Helvetica, sans-serif",
+  fontSize: 14,
+  margin: "10px 0 0 0",
 };
 
-export default connect(mapStateToProps, { signup })(SignUp);
+export default connect(mapStateToProps, { signup, currentuser })(SignUp);
