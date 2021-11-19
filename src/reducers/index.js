@@ -11,7 +11,7 @@ const formReducer = (state = InitialState, action) => {
   }
 };
 
-const userReducer = (state = {}, action) => {
+const userReducer = (state = null, action) => {
   switch (action.type) {
     case "Current_user":
       return action.payload;

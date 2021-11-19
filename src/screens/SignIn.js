@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { useNavigate } from "react-router";
 import { connect } from "react-redux";
+import { currentuser } from "../actions";
 
 const Form = ({ props, navigate }) => {
   const [email, setEmail] = useState("");
@@ -17,15 +18,11 @@ const Form = ({ props, navigate }) => {
       (item) => item.email === email && item.password === password
     );
     if (validUser?.email && validUser?.password) {
-      navigate("/SignIn/Dashboard", {
-        state: {
-          name: validUser.name,
-          email: validUser.email,
-          password: validUser.password,
-        },
-      });
+      props.currentuser(validUser)
+      navigate("/SignIn/Dashboard");
     } else if (email === "admin@gmail.com" && password === "admin1234") {
-      navigate("/SignIn/Admin", { state: { email, password } });
+      props.currentuser({email,password})
+      navigate("/SignIn/Admin");
     } else {
       alert("Please enter a valid E-mail Id or Password!");
     }
@@ -118,4 +115,4 @@ const headingStyle = {
   margin: "0 0 20px 0",
 };
 
-export default connect(mapStateToProps)(SignIn);
+export default connect(mapStateToProps,{currentuser})(SignIn);

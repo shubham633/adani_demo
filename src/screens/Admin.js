@@ -3,42 +3,40 @@ import { connect } from "react-redux";
 import { Button } from "@mui/material";
 import { sorting } from "../actions";
 import { currentuser } from "../actions";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const Admin = (props) => {
   const [isSorted, setIsSorted] = useState(false);
-  const { state } = useLocation();
   const navigate = useNavigate();
-  props.currentuser(state);
   useEffect(() => {
-    if (state === null) {
-      navigate('/SignIn')
+    if (props.user === null) {
+      navigate("/SignIn");
     }
-  })
+  });
   const sorted = (sortingData, sortBy) => {
     sortBy === "name"
       ? sortingData.sort((userA, userB) => {
-        var nameA = userA.name.toUpperCase();
-        var nameB = userB.name.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
-      })
+          var nameA = userA.name.toUpperCase();
+          var nameB = userB.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        })
       : sortingData.sort((userA, userB) => {
-        var emailA = userA.email.toUpperCase();
-        var emailB = userB.email.toUpperCase();
-        if (emailA < emailB) {
-          return -1;
-        }
-        if (emailA > emailB) {
-          return 1;
-        }
-        return 0;
-      });
+          var emailA = userA.email.toUpperCase();
+          var emailB = userB.email.toUpperCase();
+          if (emailA < emailB) {
+            return -1;
+          }
+          if (emailA > emailB) {
+            return 1;
+          }
+          return 0;
+        });
   };
 
   const userInfo = (item) => {
@@ -48,22 +46,20 @@ const Admin = (props) => {
           display: "flex",
           justifyContent: "space-around",
           backgroundColor: "#E8F5E9",
-          margin: '15px 0 0 0'
+          margin: "15px 0 0 0",
         }}
         key={item.email}
       >
-        <p style={{ color: '#616161' }}>{item.name}</p>
-        <p style={{ color: "#616161" }}>
-          {item.email}
-        </p>
+        <p style={{ color: "#616161" }}>{item.name}</p>
+        <p style={{ color: "#616161" }}>{item.email}</p>
       </div>
     );
   };
   return (
     <div style={appStyle}>
       <div style={{ padding: 20 }}>
-        <div style={{ flexDirection: 'row' }}>
-          <label style={{ fontSize: 22, fontWeight: "bold", }}>Sort By: </label>
+        <div style={{ flexDirection: "row" }}>
+          <label style={{ fontSize: 22, fontWeight: "bold" }}>Sort By: </label>
           <Button
             style={{ marginRight: 10 }}
             variant="contained"
@@ -96,10 +92,16 @@ const Admin = (props) => {
           >
             e-mail
           </Button>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -40 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: -40,
+            }}
+          >
             <Button
               variant="contained"
-              color={'success'}
+              color={"success"}
               onClick={() => {
                 navigate("/");
               }}
@@ -109,9 +111,9 @@ const Admin = (props) => {
             <Button
               style={{ marginLeft: 10 }}
               variant="contained"
-              color={'error'}
+              color={"error"}
               onClick={() => {
-                props.currentuser({});
+                props.currentuser(null);
                 navigate("/SignIn");
               }}
             >
@@ -119,14 +121,16 @@ const Admin = (props) => {
             </Button>
           </div>
         </div>
-        <div style={{
-          display: "flex",
-          justifyContent: "space-around",
-          backgroundColor: "#E8F5E9",
-          margin: '15px 0 0 0'
-        }}>
-          <p style={{ fontWeight: 'bold', fontSize: 18 }}>User Name</p>
-          <p style={{ fontWeight: 'bold', fontSize: 18 }}>User E-mail</p>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "#E8F5E9",
+            margin: "15px 0 0 0",
+          }}
+        >
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>User Name</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>User E-mail</p>
         </div>
         {isSorted
           ? props.sortData.map((item) => userInfo(item))
@@ -140,6 +144,7 @@ const mapStateToProps = (state) => {
   return {
     userData: state.formReducer,
     sortData: state.sortReducer,
+    user: state.userReducer,
   };
 };
 
@@ -148,7 +153,7 @@ const appStyle = {
   backgroundSize: "cover",
   width: "100vw",
   height: "100vh",
-  backgroundImage: `url("https://images.pexels.com/photos/82256/pexels-photo-82256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`
+  backgroundImage: `url("https://images.pexels.com/photos/82256/pexels-photo-82256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
 };
 
 export default connect(mapStateToProps, { sorting, currentuser })(Admin);
