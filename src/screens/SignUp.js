@@ -24,7 +24,8 @@ const Form = ({ props }) => {
       alert("This E-mail Id is already registered!");
     } else {
       props.signup(name, email, password);
-      props.currentuser({name, email, password});
+      props.currentuser({ name, email, password });
+     // localStorage.setItem("userInfo",props.formValue);
       navigate("/SignIn/Dashboard");
     }
   };

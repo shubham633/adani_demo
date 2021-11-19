@@ -1,21 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Button } from "@mui/material";
-import { sorting } from "../actions";
-import { currentuser } from "../actions";
+import { Button, TextField } from "@mui/material";
+import {
+  sortByName,
+  sortByEmail,
+  deleteUser,
+  updateUser,
+  currentuser,
+} from "../actions";
 import { useNavigate } from "react-router";
 
 const Admin = (props) => {
   const [isSorted, setIsSorted] = useState(false);
+  // const [sortData, setSortData] = useState(null);
+  // const [searchUser, setSearchUser] = useState("");
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   setSortData(props.userData);
+  // });
+  console.log(props);
   useEffect(() => {
     if (props.user === null) {
       navigate("/SignIn");
     }
   });
-  const sorted = (sortingData, sortBy) => {
+  // localStorage.setItem("userInfo", "formReducer");
+  // console.log(localStorage.getItem("userInfo"));
+  const sorted = (sortBy) => {
     sortBy === "name"
-      ? sortingData.sort((userA, userB) => {
+      ? props.userData.sort((userA, userB) => {
           var nameA = userA.name.toUpperCase();
           var nameB = userB.name.toUpperCase();
           if (nameA < nameB) {
@@ -26,7 +39,7 @@ const Admin = (props) => {
           }
           return 0;
         })
-      : sortingData.sort((userA, userB) => {
+      : props.userData.sort((userA, userB) => {
           var emailA = userA.email.toUpperCase();
           var emailB = userB.email.toUpperCase();
           if (emailA < emailB) {
@@ -39,7 +52,8 @@ const Admin = (props) => {
         });
   };
 
-  const userInfo = (item) => {
+  const userInfo = (item, index) => {
+    //console.log(item);
     return (
       <div
         style={{
@@ -52,6 +66,8 @@ const Admin = (props) => {
       >
         <p style={{ color: "#616161" }}>{item.name}</p>
         <p style={{ color: "#616161" }}>{item.email}</p>
+        <Button onClick={() => props.deleteUser(index)}>Delete</Button>
+        <Button onClick={() => props.updateUser(index)}>Edit</Button>
       </div>
     );
   };
@@ -73,9 +89,11 @@ const Admin = (props) => {
             style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
-              let nameSortingData = Object.assign([], props.userData);
-              sorted(nameSortingData, "name");
-              props.sorting(nameSortingData);
+              //let nameSortingData =props.userData
+              let nameSort = sorted("name");
+              console.log(nameSort);
+              props.sortByName(props.userData);
+              // setSortData();
               setIsSorted(true);
             }}
           >
@@ -84,9 +102,11 @@ const Admin = (props) => {
           <Button
             variant="contained"
             onClick={() => {
-              let emailSortingData = Object.assign([], props.userData);
-              sorted(emailSortingData, "email");
-              props.sorting(emailSortingData);
+              // Object.assign([], props.userData);
+              // let emailSortingData = props.userData;
+              let emailSort = sorted("email");
+
+              props.sortByEmail(props.userData);
               setIsSorted(true);
             }}
           >
@@ -131,10 +151,10 @@ const Admin = (props) => {
         >
           <p style={{ fontWeight: "bold", fontSize: 18 }}>User Name</p>
           <p style={{ fontWeight: "bold", fontSize: 18 }}>User E-mail</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Delete</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Edit</p>
         </div>
-        {isSorted
-          ? props.sortData.map((item) => userInfo(item))
-          : props.userData.map((item) => userInfo(item))}
+        {props.userData.map((item, index) => userInfo(item, index))}
       </div>
     </div>
   );
@@ -143,7 +163,7 @@ const Admin = (props) => {
 const mapStateToProps = (state) => {
   return {
     userData: state.formReducer,
-    sortData: state.sortReducer,
+   // sortData: state.sortReducer,
     user: state.userReducer,
   };
 };
@@ -156,4 +176,10 @@ const appStyle = {
   backgroundImage: `url("https://images.pexels.com/photos/82256/pexels-photo-82256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
 };
 
-export default connect(mapStateToProps, { sorting, currentuser })(Admin);
+export default connect(mapStateToProps, {
+  sortByName,
+  sortByEmail,
+  currentuser,
+  deleteUser,
+  updateUser,
+})(Admin);
