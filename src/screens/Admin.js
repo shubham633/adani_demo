@@ -14,6 +14,8 @@ import {
   searchUser,
 } from "../actions";
 import ModalComponent from "../utility/reusableComponents/ModalComponent";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 const Admin = (props) => {
   const [userData, setUserData] = useState([]);
@@ -36,15 +38,25 @@ const Admin = (props) => {
     props.searchTxt,
   ]);
 
-  const sorted = (sortBy) => {
+  const sorted = (sortBy, sortOrder) => {
     userData.sort((user1, user2) => {
       let userA = user1[sortBy].toUpperCase();
       let userB = user2[sortBy].toUpperCase();
-      if (userA < userB) {
-        return -1;
+      if (sortOrder === "Ascend") {
+        if (userA < userB) {
+          return -1;
+        }
+        if (userA > userB) {
+          return 1;
+        }
       }
-      if (userA > userB) {
-        return 1;
+      if (sortOrder === "Descend") {
+        if (userA > userB) {
+          return -1;
+        }
+        if (userA < userB) {
+          return 1;
+        }
       }
       return 0;
     });
@@ -163,23 +175,35 @@ const Admin = (props) => {
           >
             default
           </Button>
-          <Button
+
+          <ArrowDownwardIcon
             style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
-              sorted("name");
+              sorted("name", "Ascend");
             }}
-          >
-            name
-          </Button>
-          <Button
+          />
+          <ArrowUpwardIcon
+            style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
-              sorted("email");
+              sorted("name", "Descend");
             }}
-          >
-            e-mail
-          </Button>
+          />
+          <ArrowDownwardIcon
+            style={{ marginRight: 10 }}
+            variant="contained"
+            onClick={() => {
+              sorted("email", "Ascend");
+            }}
+          />
+          <ArrowUpwardIcon
+            style={{ marginRight: 10 }}
+            variant="contained"
+            onClick={() => {
+              sorted("email", "Descend");
+            }}
+          />
           <div
             style={{
               display: "flex",
