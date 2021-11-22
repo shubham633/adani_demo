@@ -31,10 +31,10 @@ const Form = ({ props, navigate }) => {
       (item) => item.email === email && item.password === password
     );
     if (validUser?.email && validUser?.password) {
-      props.currentuser(validUser)
+      props.currentuser(validUser);
       navigate("/SignIn/Dashboard");
     } else if (email === "admin@gmail.com" && password === "admin1234") {
-      props.currentuser({ email, password })
+      props.currentuser({ email, password });
       navigate("/SignIn/Admin");
     } else {
       alert("Please enter a valid E-mail Id or Password!");

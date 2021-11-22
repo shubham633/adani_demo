@@ -24,87 +24,87 @@ const Form = ({ props }) => {
       alert("This E-mail Id is already registered!");
     } else {
       props.signup(name, email, password);
-      props.currentuser({name, email, password});
+      props.currentuser({ name, email, password, role: 'default', salary: 32400 });
       navigate("/SignIn/Dashboard");
     }
   };
 
-    return (
-        <form style={formStyle} onSubmit={handleSubmit}>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-                <label style={headingStyle}> Create Your Account </label>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                <div style={{ margin: "0 0 10px 0" }}>
-                    <TextField
-                        id="outlined-basic"
-                        label="Username"
-                        type="text"
-                        required
-                        autoComplete="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
-                <div style={{ margin: "0 0 10px 0" }}>
-                    <TextField
-                        id="outlined-basic"
-                        label="E-mail"
-                        autoComplete="email"
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div style={{ margin: "0 0 10px 0" }}>
-                    <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        required
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div style={{ margin: "10px 0 10px 0" }}>
-                    <Button
-                        variant="contained"
-                        color="warning"
-                        size="medium"
-                        type="submit"
-                        value="submit"
-                    >
-                        Submit
-                    </Button>
-                </div>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "row",
-                }}
-            >
-                <label style={lableStyle}> Already Have An Account? </label>
-                <Button
-                    variant="text"
-                    color="success"
-                    size="medium"
-                    onClick={() => navigate("/SignIn")}
-                >
-                    Login
-                </Button>
-            </div>
-        </form>
-    );
+  return (
+    <form style={formStyle} onSubmit={handleSubmit}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <label style={headingStyle}> Create Your Account </label>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ margin: "0 0 10px 0" }}>
+          <TextField
+            id="outlined-basic"
+            label="Username"
+            type="text"
+            required
+            autoComplete="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div style={{ margin: "0 0 10px 0" }}>
+          <TextField
+            id="outlined-basic"
+            label="E-mail"
+            autoComplete="email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div style={{ margin: "0 0 10px 0" }}>
+          <TextField
+            id="outlined-password-input"
+            label="Password"
+            type="password"
+            required
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div style={{ margin: "10px 0 10px 0" }}>
+          <Button
+            variant="contained"
+            color="warning"
+            size="medium"
+            type="submit"
+            value="submit"
+          >
+            Submit
+          </Button>
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}
+      >
+        <label style={lableStyle}> Already Have An Account? </label>
+        <Button
+          variant="text"
+          color="success"
+          size="medium"
+          onClick={() => navigate("/SignIn")}
+        >
+          Login
+        </Button>
+      </div>
+    </form>
+  );
 };
 
 const mapStateToProps = (state) => {

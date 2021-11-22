@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 const Container = ({ props, navigate }) => {
   let userName = props.user?.name;
   let userEmail = props.user?.email;
+  let userRole = props.user?.role;
+  let userSalary = props.user?.salary;
 
   return (
     <div style={{ padding: 20 }}>
@@ -17,12 +19,16 @@ const Container = ({ props, navigate }) => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <label style={userdata}> Username:</label>
           <label style={userdata}> E-mail Address:</label>
+          <label style={userdata}> Role:</label>
+          <label style={userdata}> Salary:</label>
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", marginLeft: 40 }}
         >
           <label style={uservalue}>{userName}</label>
           <label style={uservalue}>{userEmail}</label>
+          <label style={uservalue}>{userRole === 'default' ? 'we update soon' : userRole}</label>
+          <label style={uservalue}>{userSalary}</label>
         </div>
       </div>
       <div
@@ -70,7 +76,7 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.userReducer };
+  return { user: state.userReducer, formValue: state.formReducer };
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);
 
