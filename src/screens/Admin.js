@@ -10,7 +10,7 @@ import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-//import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import ListItemButton from '@mui/material/ListItemButton';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -19,6 +19,7 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ListIcon from '@mui/icons-material/List';
 import BuildIcon from '@mui/icons-material/Build';
+import AppBar from '@mui/material/AppBar';
 
 const drawerWidth = 240;
 
@@ -26,7 +27,6 @@ const Admin = (props) => {
 
   const [open, setOpen] = React.useState(true);
   const [open1, setOpen1] = React.useState(true);
-
   const handleClick = () => {
     setOpen(!open);
   };
@@ -118,7 +118,7 @@ const Admin = (props) => {
         style={{
           display: "flex",
           justifyContent: "space-around",
-          backgroundColor: "#E8F5E9",
+          backgroundColor: "white",
           margin: "15px 0 0 0",
         }}
         key={item.email}
@@ -130,59 +130,32 @@ const Admin = (props) => {
   };
   return (
     <div style={appStyle}>
-      <Drawer
-        variant="permanent"
+      <div>
+        <Drawer
+          variant="permanent"
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+          open
+        >
+          {drawer}
+        </Drawer>
+      </div>
+      <AppBar
+        position="fixed"
         sx={{
-          display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
         }}
-        open
       >
-        {drawer}
-      </Drawer>
-      <div style={{ paddingLeft: '16%', paddingRight: 15, paddingTop: 20 }}>
-        <div style={{ flexDirection: "row" }}>
-          <label style={{ fontSize: 22, fontWeight: "bold" }}>Sort By: </label>
-          <Button
-            style={{ marginRight: 10 }}
-            variant="contained"
-            onClick={() => {
-              setIsSorted(false);
-            }}
-          >
-            default
-          </Button>
-          <Button
-            style={{ marginRight: 10 }}
-            variant="contained"
-            onClick={() => {
-              let nameSortingData = Object.assign([], props.userData);
-              sorted(nameSortingData, "name");
-              props.sorting(nameSortingData);
-              setIsSorted(true);
-            }}
-          >
-            name
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => {
-              let emailSortingData = Object.assign([], props.userData);
-              sorted(emailSortingData, "email");
-              props.sorting(emailSortingData);
-              setIsSorted(true);
-            }}
-          >
-            e-mail
-          </Button>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: -40,
-            }}
-          >
+        <Toolbar>
+          <Typography variant="h6" noWrap component="div">
+            Welcome back, Admin!
+          </Typography>
+          <div style={{ marginLeft: '69%' }}>
             <Button
+              style={{ marginLeft: 20 }}
               variant="contained"
               color={"success"}
               onClick={() => {
@@ -203,12 +176,55 @@ const Admin = (props) => {
               Logout
             </Button>
           </div>
+        </Toolbar>
+      </AppBar>
+      <div style={{ paddingTop: '8%', flex: 1, paddingLeft: '16%', paddingRight: 15 }}>
+        <div style={{ flexDirection: "row" }}>
+          <label style={{ fontSize: 18, fontWeight: 'bold' }}>Sort By: </label>
+          <Button
+            style={{ marginRight: 10 }}
+            variant="outlined"
+            color={'warning'}
+            size={'small'}
+            onClick={() => {
+              setIsSorted(false);
+            }}
+          >
+            default
+          </Button>
+          <Button
+            style={{ marginRight: 10 }}
+            variant="outlined"
+            color={'warning'}
+            size={'small'}
+            onClick={() => {
+              let nameSortingData = Object.assign([], props.userData);
+              sorted(nameSortingData, "name");
+              props.sorting(nameSortingData);
+              setIsSorted(true);
+            }}
+          >
+            name
+          </Button>
+          <Button
+            variant="outlined"
+            color={'warning'}
+            size={'small'}
+            onClick={() => {
+              let emailSortingData = Object.assign([], props.userData);
+              sorted(emailSortingData, "email");
+              props.sorting(emailSortingData);
+              setIsSorted(true);
+            }}
+          >
+            e-mail
+          </Button>
         </div>
         <div
           style={{
             display: "flex",
             justifyContent: "space-around",
-            backgroundColor: "#E8F5E9",
+            backgroundColor: "white",
             margin: "15px 0 0 0",
           }}
         >
@@ -232,8 +248,10 @@ const mapStateToProps = (state) => {
 };
 
 const appStyle = {
-  backgroundPosition: "center",
-  backgroundSize: "cover",
+  display: 'flex',
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundColor: '#E0E0E0',
   width: "100vw",
   height: "100vh",
 };
