@@ -5,16 +5,10 @@ import { currentuser } from "../actions";
 import Button from "@mui/material/Button";
 
 const Container = ({ props, navigate }) => {
-  const jsonuser= localStorage.getItem('user');
-  const currentuser=JSON.parse(jsonuser)
-   let userName = currentuser?.name;
-  let userEmail = currentuser?.email;
-  let userRole = currentuser?.role;
-  let userSalary = currentuser?.salary;
-  //let userName = props.user?.name;
-  //let userEmail = props.user?.email;
-  // let userRole = props.user?.role;
-  // let userSalary = props.user?.salary;
+  let userName = props.user?.name;
+  let userEmail = props.user?.email;
+  let userRole = props.user?.role;
+  let userSalary = props.user?.salary;
 
   return (
     <div style={{ padding: 20 }}>
@@ -25,7 +19,7 @@ const Container = ({ props, navigate }) => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <label style={userdata}> Username:</label>
           <label style={userdata}> E-mail Address:</label>
-          <label style={userdata}> Role: {}</label>
+          <label style={userdata}> Role:</label>
           <label style={userdata}> Salary:</label>
         </div>
         <div
@@ -33,7 +27,7 @@ const Container = ({ props, navigate }) => {
         >
           <label style={uservalue}>{userName}</label>
           <label style={uservalue}>{userEmail}</label>
-          <label style={uservalue}>{userRole==='default'?'we will update soon':userRole}</label>
+          <label style={uservalue}>{userRole==='default'?'we update soon':userRole}</label>
           <label style={uservalue}>{userSalary}</label>
         </div>
       </div>
@@ -57,7 +51,6 @@ const Container = ({ props, navigate }) => {
           color="error"
           onClick={() => {
             props.currentuser(null);
-            localStorage.removeItem('user');
             navigate("/SignIn");
           }}
         >
@@ -70,11 +63,12 @@ const Container = ({ props, navigate }) => {
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
+  console.log(props);
   useEffect(() => {
-    if (!localStorage.getItem('user')) {
+    if (props.user === null) {
       navigate("/SignIn");
     }
-  },[navigate]);
+  });
   return (
     <div style={appStyle}>
       <Container props={props} navigate={navigate} />

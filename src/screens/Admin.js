@@ -9,6 +9,7 @@ import {
   updateUser,
   currentuser,
   isUpdating,
+  pagination,
   searchingTxt,
   searchUser,
 } from "../actions";
@@ -23,7 +24,7 @@ const Admin = (props) => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (!localStorage.getItem('user')) {
+    if (props.user === null) {
       navigate("/SignIn");
     }
     props.searchTxt !== ""
@@ -225,7 +226,6 @@ const Admin = (props) => {
               color={"error"}
               onClick={() => {
                 props.currentuser(null);
-                localStorage.removeItem('user');
                 navigate("/SignIn");
               }}
             >
@@ -283,6 +283,7 @@ export default connect(mapStateToProps, {
   deleteUser,
   updateUser,
   isUpdating,
+  pagination,
   searchingTxt,
   searchUser,
 })(Admin);

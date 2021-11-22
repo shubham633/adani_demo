@@ -47,6 +47,12 @@ export const searchingTxt = (txt) => {
   };
 };
 
+export const pagination = () => {
+  return {
+    type: "PAGINATION",
+  };
+};
+
 export const searchUser = (user) => {
   return {
     type: "SEARCH_USER",
