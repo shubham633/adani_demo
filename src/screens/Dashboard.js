@@ -5,8 +5,13 @@ import { currentuser } from "../actions";
 import Button from "@mui/material/Button";
 
 const Container = ({ props, navigate }) => {
-  let userName = props.user?.name;
-  let userEmail = props.user?.email;
+  // const jsonuser= localStorage.getItem('user');
+  // const currentuser=JSON.parse(jsonuser)
+
+  let userName = props?.user?.name;
+  let userEmail = props?.user?.email;
+  //  let userName = currentuser.name;
+  // let userEmail = currentuser.email;
 
   return (
     <div style={{ padding: 20 }}>
@@ -45,6 +50,7 @@ const Container = ({ props, navigate }) => {
           color="error"
           onClick={() => {
             props.currentuser(null);
+            localStorage.removeItem('user');
             navigate("/SignIn");
           }}
         >
@@ -58,10 +64,10 @@ const Container = ({ props, navigate }) => {
 const Dashboard = (props) => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (props.user === null) {
+    if (!localStorage.getItem('user')) {
       navigate("/SignIn");
     }
-  });
+  },[navigate]);
   return (
     <div style={appStyle}>
       <Container props={props} navigate={navigate} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { useNavigate } from "react-router";
@@ -8,6 +8,24 @@ import { currentuser } from "../actions";
 const Form = ({ props, navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    setTimeout(() => {
+      if(localStorage.getItem('user')) {
+        navigate("/SignIn/Admin");
+      } 
+     // else(navigate("/SignIn/Dashboard"))
+    }, 100);
+  },[navigate]);
+  
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if(localStorage.getItem('user')) {
+  //       navigate("/SignIn/Dashboard");
+  //     } 
+  //    // else(navigate("/SignIn/Dashboard"))
+  //   }, 100);
+  // },[navigate]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     userValidation();
@@ -18,10 +36,13 @@ const Form = ({ props, navigate }) => {
       (item) => item.email === email && item.password === password
     );
     if (validUser?.email && validUser?.password) {
-      props.currentuser(validUser)
+      props.currentuser(validUser);
+     // console.log('validUser', validUser)
+      localStorage.setItem('user', JSON.stringify(validUser));
       navigate("/SignIn/Dashboard");
     } else if (email === "admin@gmail.com" && password === "admin1234") {
-      props.currentuser({email,password})
+      props.currentuser({email,password});
+      localStorage.setItem('user', JSON.stringify({email, password}));
       navigate("/SignIn/Admin");
     } else {
       alert("Please enter a valid E-mail Id or Password!");

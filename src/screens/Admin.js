@@ -9,10 +9,10 @@ const Admin = (props) => {
   const [isSorted, setIsSorted] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    if (props.user === null) {
+    if (!localStorage.getItem('user')) {
       navigate("/SignIn");
     }
-  });
+  },[navigate]);
   const sorted = (sortingData, sortBy) => {
     sortBy === "name"
       ? sortingData.sort((userA, userB) => {
@@ -114,6 +114,7 @@ const Admin = (props) => {
               color={"error"}
               onClick={() => {
                 props.currentuser(null);
+                localStorage.removeItem('user');
                 navigate("/SignIn");
               }}
             >
