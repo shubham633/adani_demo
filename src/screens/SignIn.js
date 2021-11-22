@@ -136,4 +136,4 @@ const headingStyle = {
   margin: "0 0 20px 0",
 };
 
-export default connect(mapStateToProps,{currentuser})(SignIn);
+export default connect(mapStateToProps, { currentuser })(SignIn);

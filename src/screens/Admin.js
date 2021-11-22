@@ -1,59 +1,150 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Button } from "@mui/material";
-import { sorting } from "../actions";
-import { currentuser } from "../actions";
+import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {
+  deleteUser,
+  updateUser,
+  currentuser,
+  isUpdating,
+  searchingTxt,
+  searchUser,
+} from "../actions";
+import ModalComponent from "../utility/reusableComponents/ModalComponent";
 
 const Admin = (props) => {
-  const [isSorted, setIsSorted] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [userRole, setUserRole] = useState("");
+  const [userSalary, setUserSalary] = useState("");
+
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem('user')) {
       navigate("/SignIn");
     }
-  },[navigate]);
-  const sorted = (sortingData, sortBy) => {
-    sortBy === "name"
-      ? sortingData.sort((userA, userB) => {
-          var nameA = userA.name.toUpperCase();
-          var nameB = userB.name.toUpperCase();
-          if (nameA < nameB) {
-            return -1;
-          }
-          if (nameA > nameB) {
-            return 1;
-          }
-          return 0;
-        })
-      : sortingData.sort((userA, userB) => {
-          var emailA = userA.email.toUpperCase();
-          var emailB = userB.email.toUpperCase();
-          if (emailA < emailB) {
-            return -1;
-          }
-          if (emailA > emailB) {
-            return 1;
-          }
-          return 0;
-        });
+    props.searchTxt !== ""
+      ? setUserData([...props.searchUserData])
+      : setUserData([...props.userData]);
+  }, [
+    props.userData,
+    props.user,
+    navigate,
+    props.searchUserData,
+    props.searchTxt,
+  ]);
+
+  const sorted = (sortBy) => {
+    userData.sort((user1, user2) => {
+      let userA = user1[sortBy].toUpperCase();
+      let userB = user2[sortBy].toUpperCase();
+      if (userA < userB) {
+        return -1;
+      }
+      if (userA > userB) {
+        return 1;
+      }
+      return 0;
+    });
+    setUserData([...userData]);
   };
 
-  const userInfo = (item) => {
+  const validateUpdation = (item) => {
+    if (userRole === "") {
+      alert("please update role");
+    } else if (userSalary === "") {
+      alert("please update salary");
+    } else {
+      props.updateUser(item.email, userRole, userSalary);
+      props.isUpdating(item.email);
+      setUserRole("");
+      setUserSalary("");
+    }
+  };
+
+  const userInfo = (item, index) => {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          backgroundColor: "#E8F5E9",
-          margin: "15px 0 0 0",
-        }}
-        key={item.email}
-      >
-        <p style={{ color: "#616161" }}>{item.name}</p>
-        <p style={{ color: "#616161" }}>{item.email}</p>
+      <div key={item.email}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "#E8F5E9",
+            margin: "15px 0 0 0",
+          }}
+        >
+          <p style={{ color: "#616161" }}>{item.name}</p>
+          <p style={{ color: "#616161" }}>{item.email}</p>
+          <p style={{ color: "#616161" }}>{item.role}</p>
+          <p style={{ color: "#616161" }}>{item.salary}</p>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <DeleteIcon
+              color="error"
+              onClick={() => {
+                props.deleteUser(item.email);
+              }}
+            />
+            <ModalComponent
+              open={item.isEdit}
+              closeModal={() => {
+                props.isUpdating(item.email);
+              }}
+              email={item.email}
+              openModalBtn={
+                <EditIcon
+                  color="primary"
+                  onClick={() => {
+                    props.isUpdating(item.email);
+                  }}
+                />
+              }
+            >
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <TextField
+                  value={userRole}
+                  type="text"
+                  onChange={(e) => {
+                    setUserRole(e.target.value);
+                  }}
+                  placeholder="update role"
+                />
+                <TextField
+                  style={{ marginTop: 10, marginBottom: 5 }}
+                  value={userSalary}
+                  type="number"
+                  onChange={(e) => {
+                    setUserSalary(e.target.value);
+                  }}
+                  placeholder="update salary"
+                />
+                <Button
+                  onClick={() => {
+                    validateUpdation(item);
+                  }}
+                >
+                  update
+                </Button>
+              </div>
+            </ModalComponent>
+          </div>
+        </div>
       </div>
     );
+  };
+
+  const search = (txt) => {
+    const fields = ["name"];
+    let arrayAfterSearch = [];
+    props.userData.filter((item) =>
+      fields.some((field) =>
+        item[field].toUpperCase().indexOf(txt.toUpperCase()) !== -1
+          ? arrayAfterSearch.push(item)
+          : null
+      )
+    );
+    props.searchUser(arrayAfterSearch);
+    setUserData([...arrayAfterSearch]);
   };
   return (
     <div style={appStyle}>
@@ -64,7 +155,9 @@ const Admin = (props) => {
             style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
-              setIsSorted(false);
+              props.searchTxt !== ""
+                ? setUserData([...props.searchUserData])
+                : setUserData([...props.userData]);
             }}
           >
             default
@@ -73,10 +166,7 @@ const Admin = (props) => {
             style={{ marginRight: 10 }}
             variant="contained"
             onClick={() => {
-              let nameSortingData = Object.assign([], props.userData);
-              sorted(nameSortingData, "name");
-              props.sorting(nameSortingData);
-              setIsSorted(true);
+              sorted("name");
             }}
           >
             name
@@ -84,10 +174,7 @@ const Admin = (props) => {
           <Button
             variant="contained"
             onClick={() => {
-              let emailSortingData = Object.assign([], props.userData);
-              sorted(emailSortingData, "email");
-              props.sorting(emailSortingData);
-              setIsSorted(true);
+              sorted("email");
             }}
           >
             e-mail
@@ -122,6 +209,15 @@ const Admin = (props) => {
             </Button>
           </div>
         </div>
+        <TextField
+          value={props.searchTxt}
+          placeholder="search user..."
+          onChange={(e) => {
+            search(e.target.value);
+            props.searchingTxt(e.target.value);
+          }}
+          style={{ backgroundColor: "white", marginTop: 10, borderRadius: 5 }}
+        />
         <div
           style={{
             display: "flex",
@@ -132,10 +228,11 @@ const Admin = (props) => {
         >
           <p style={{ fontWeight: "bold", fontSize: 18 }}>User Name</p>
           <p style={{ fontWeight: "bold", fontSize: 18 }}>User E-mail</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Role</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Salary</p>
+          <p style={{ fontWeight: "bold", fontSize: 18 }}>Action</p>
         </div>
-        {isSorted
-          ? props.sortData.map((item) => userInfo(item))
-          : props.userData.map((item) => userInfo(item))}
+        {userData.map((item, index) => userInfo(item, index))}
       </div>
     </div>
   );
@@ -144,17 +241,24 @@ const Admin = (props) => {
 const mapStateToProps = (state) => {
   return {
     userData: state.formReducer,
-    sortData: state.sortReducer,
     user: state.userReducer,
+    searchTxt: state.searchingTxtReducer,
+    perPageData: state.pageReducer,
+    searchUserData: state.searchReducer,
   };
 };
 
 const appStyle = {
-  backgroundPosition: "center",
-  backgroundSize: "cover",
   width: "100vw",
   height: "100vh",
   backgroundImage: `url("https://images.pexels.com/photos/82256/pexels-photo-82256.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")`,
 };
 
-export default connect(mapStateToProps, { sorting, currentuser })(Admin);
+export default connect(mapStateToProps, {
+  currentuser,
+  deleteUser,
+  updateUser,
+  isUpdating,
+  searchingTxt,
+  searchUser,
+})(Admin);
