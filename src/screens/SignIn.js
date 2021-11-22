@@ -8,23 +8,28 @@ import { currentuser } from "../actions";
 const Form = ({ props, navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-    setTimeout(() => {
-      if(localStorage.getItem('user')) {
-        navigate("/SignIn/Admin");
-      } 
-     // else(navigate("/SignIn/Dashboard"))
-    }, 100);
-  },[navigate]);
-  
+
   // useEffect(() => {
   //   setTimeout(() => {
   //     if(localStorage.getItem('user')) {
-  //       navigate("/SignIn/Dashboard");
+  //       navigate("/SignIn/Admin");
   //     } 
   //    // else(navigate("/SignIn/Dashboard"))
   //   }, 100);
   // },[navigate]);
+  
+  useEffect(() => {
+    const jsonuser= localStorage.getItem('user');
+    const currentuser=JSON.parse(jsonuser)
+    setTimeout(() => {
+      if(currentuser?.email==='admin@gmail.com' && currentuser?.password==='admin1234'){
+        navigate("/SignIn/Admin");
+      }
+      else if(currentuser?.email && currentuser?.password) {
+        navigate("/SignIn/Dashboard");
+      } 
+    }, 100);
+  },[navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
