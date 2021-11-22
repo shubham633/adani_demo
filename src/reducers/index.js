@@ -3,49 +3,70 @@ import { UserData } from "../RegisterData.json";
 
 let InitialState = UserData;
 const formReducer = (state = InitialState, action) => {
-  console.log(state);
   switch (action.type) {
-    case "Sign_up":
+    case "SIGN_UP":
       return [...state, action.payload];
-    case "Delete_user": {
-      state.splice(action.payload, 1);
+    case "DELETE_USER": {
+      let objIndex = state.findIndex((obj) => obj.email === action.payload);
+      state.splice(objIndex, 1);
       return state.slice();
     }
-    case "Name_sort":
-      return action.payload;
-    case "Email_sort":
-      return action.payload;
-    // case "Update_user": {
-    //   let objIndex = state.findIndex((obj => obj.action.payload === 1));
-    //   return state[action.payload]
-    // }
+    case "UPDATE_USER": {
+      let objIndex = state.findIndex(
+        (obj) => obj.email === action.payload.userIdentity
+      );
+      state[objIndex].role = action.payload.updationData.role;
+      state[objIndex].salary = action.payload.updationData.salary;
+      return [...state];
+    }
+    case "IS_EDITING": {
+      let objIndex = state.findIndex(
+        (obj) => obj.email === action.payload.userIdentity
+      );
+      state[objIndex].isEdit = !state[objIndex].isEdit;
+      return [...state];
+    }
     default:
       return state;
   }
 };
-// localStorage.setItem('userInfo','formReducer')
-// console.log(localStorage.getItem('userInfo'))
+
+const searchReducer = (state = [], action) => {
+  switch (action.type) {
+    case "SEARCH_USER": {
+      return action.payload;
+    }
+    case "DELETE_USER": {
+      let objIndex = state.findIndex((obj) => obj.email === action.payload);
+      state.splice(objIndex, 1);
+      return state.slice();
+    }
+    default:
+      return state;
+  }
+};
 
 const userReducer = (state = null, action) => {
   switch (action.type) {
-    case "Current_user":
+    case "CURRENT_USER":
       return action.payload;
     default:
       return state;
   }
 };
 
-// const sortReducer = (state = InitialState, action) => {
-//   switch (action.type) {
-//     case "Sort":
-//       return action.payload;
-//     default:
-//       return state;
-//   }
-// };
+const searchingTxtReducer = (state = "", action) => {
+  switch (action.type) {
+    case "SEARCH_TXT":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 export default combineReducers({
   formReducer,
   userReducer,
-  //sortReducer,
+  searchingTxtReducer,
+  searchReducer,
 });

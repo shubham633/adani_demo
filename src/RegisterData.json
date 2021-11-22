@@ -2,21 +2,27 @@
   "UserData": [
     {
       "name": "shubham",
-      "email":"c@gmail.com",
-      "password":"1234",
-      "profession":""
+      "email": "c@gmail.com",
+      "password": "1234",
+      "role": "default",
+      "salary": 32400,
+      "isEdit": false
     },
     {
       "name": "vishal",
-      "email":"a@gmail.com",
-      "password":"1234",
-      "profession":""
+      "email": "a@gmail.com",
+      "password": "1234",
+      "role": "default",
+      "salary": 32400,
+      "isEdit": false
     },
     {
       "name": "harsh",
-      "email":"b@gmail.com",
-      "password":"1234",
-      "profession":""
+      "email": "b@gmail.com",
+      "password": "1234",
+      "role": "default",
+      "salary": 32400,
+      "isEdit": false
     }
   ]
 }

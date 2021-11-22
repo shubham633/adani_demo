@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 const Container = ({ props, navigate }) => {
   let userName = props.user?.name;
   let userEmail = props.user?.email;
- // console.log(localStorage.getItem("userInfo"));
+  let userRole = props.user?.role;
+  let userSalary = props.user?.salary;
 
   return (
     <div style={{ padding: 20 }}>
@@ -18,12 +19,16 @@ const Container = ({ props, navigate }) => {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <label style={userdata}> Username:</label>
           <label style={userdata}> E-mail Address:</label>
+          <label style={userdata}> Role:</label>
+          <label style={userdata}> Salary:</label>
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", marginLeft: 40 }}
         >
           <label style={uservalue}>{userName}</label>
           <label style={uservalue}>{userEmail}</label>
+          <label style={uservalue}>{userRole==='default'?'we update soon':userRole}</label>
+          <label style={uservalue}>{userSalary}</label>
         </div>
       </div>
       <div
@@ -58,7 +63,7 @@ const Container = ({ props, navigate }) => {
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
-  console.log(props)
+  console.log(props);
   useEffect(() => {
     if (props.user === null) {
       navigate("/SignIn");
@@ -72,7 +77,7 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { user: state.userReducer, formValue:state.formReducer };
+  return { user: state.userReducer, formValue: state.formReducer };
 };
 export default connect(mapStateToProps, { currentuser })(Dashboard);
 
