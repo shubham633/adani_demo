@@ -154,4 +154,4 @@ const lableStyle = {
   margin: "10px 0 0 0",
 };
 
-export default connect(mapStateToProps, { signup, currentuser })(SignUp);
+export default connect(mapStateToProps, { currentuser, signup })(SignUp);
