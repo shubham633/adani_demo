@@ -32,6 +32,7 @@ import {
 import ModalComponent from "../utility/reusableComponents/ModalComponent";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Cards from './Cards';
 
 const drawerWidth = 240;
 
@@ -41,6 +42,7 @@ const Admin = (props) => {
   const [userSalary, setUserSalary] = useState("");
   const [open, setOpen] = useState(true);
   const [open1, setOpen1] = useState(true);
+  const [showList, setshowList] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -74,11 +76,11 @@ const Admin = (props) => {
             <PersonOutlineIcon />
           </ListItemIcon>
           <ListItemText primary="Users" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {!open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={!open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }} >
+            <ListItemButton sx={{ pl: 4 }} onClick={() => setshowList(!showList)} >
               <ListItemIcon>
                 <ListIcon />
               </ListItemIcon>
@@ -94,9 +96,9 @@ const Admin = (props) => {
             <BuildIcon />
           </ListItemIcon>
           <ListItemText primary="Tools" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {!open1 ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open1} timeout="auto" unmountOnExit>
+        <Collapse in={!open1} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
@@ -242,6 +244,7 @@ const Admin = (props) => {
     props.searchUser(arrayAfterSearch);
     setUserData([...arrayAfterSearch]);
   };
+
   return (
     <div style={appStyle}>
       <div>
@@ -296,7 +299,20 @@ const Admin = (props) => {
           </div>
         </Toolbar>
       </AppBar>
-      <div style={{ marginLeft: '10%', flex: 1, marginTop: '6%', paddingLeft: 95, paddingRight: 15 }}>
+      {!showList &&
+        <div style={{ marginLeft: '20%', marginTop: '12%', flexDirection: 'row', display: 'flex' }}>
+          <div style={{ flex: 1, marginRight: 80 }}>
+            <Cards image="https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+          </div>
+          <div style={{ flex: 1, marginRight: 80 }}>
+            <Cards image="https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+          </div>
+          <div style={{ flex: 1 }}>
+            <Cards image="https://images.pexels.com/photos/251225/pexels-photo-251225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+          </div>
+        </div>
+      }
+      {showList && <div style={{ marginLeft: '10%', flex: 1, marginTop: '6%', paddingLeft: 95, paddingRight: 15 }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div style={{ flex: 1 }}>
             <TextField
@@ -408,7 +424,7 @@ const Admin = (props) => {
           </div>
         </div>
         {userData.map((item, index) => userInfo(item, index))}
-      </div>
+      </div>}
     </div>
   );
 };
