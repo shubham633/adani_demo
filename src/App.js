@@ -5,12 +5,14 @@ import SignUp from "./screens/SignUp";
 import Dashboard from "./screens/Dashboard";
 import Admin from "./screens/Admin";
 import Home from "./screens/Home";
+import UserList from './screens/UserList'
 
 const App = () => {
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/UserList" element={<UserList />} />
                 <Route path="/SignIn" element={<SignIn />} />
                 <Route path="/SignIn/Dashboard" element={<Dashboard />} />
                 <Route path="/SignUp" element={<SignUp />} />

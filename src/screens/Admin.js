@@ -19,8 +19,8 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 const Admin = (props) => {
   const [userData, setUserData] = useState([]);
-  const [userRole, setUserRole] = useState("");
-  const [userSalary, setUserSalary] = useState("");
+  const [userRole, setUserRole] = useState("default");
+  const [userSalary, setUserSalary] = useState(32400);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -66,13 +66,15 @@ const Admin = (props) => {
   const validateUpdation = (item) => {
     if (userRole === "") {
       alert("please update role");
+      return false;
     } else if (userSalary === "") {
       alert("please update salary");
+      return false;
     } else {
-      props.updateUser(item.email, userRole, userSalary);
+      props.updateUser(item.email, userRole, Number(userSalary));
       props.isUpdating(item.email);
-      setUserRole("");
-      setUserSalary("");
+      setUserRole("default");
+      setUserSalary(32400);
     }
   };
 
@@ -115,7 +117,7 @@ const Admin = (props) => {
             >
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <TextField
-                  value={userRole}
+                  defaultValue={item.role}
                   type="text"
                   onChange={(e) => {
                     setUserRole(e.target.value);
@@ -124,7 +126,7 @@ const Admin = (props) => {
                 />
                 <TextField
                   style={{ marginTop: 10, marginBottom: 5 }}
-                  value={userSalary}
+                  defaultValue={item.salary}
                   type="number"
                   onChange={(e) => {
                     setUserSalary(e.target.value);
