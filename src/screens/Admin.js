@@ -303,13 +303,13 @@ const Admin = (props) => {
       {!showList &&
         <div style={{ marginLeft: '20%', marginTop: '12%', flexDirection: 'row', display: 'flex' }}>
           <div style={{ flex: 1, marginRight: 80 }}>
-            <Cards image="https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+            <Cards header='Lorem Ipsum' image="https://images.pexels.com/photos/1903702/pexels-photo-1903702.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
           </div>
           <div style={{ flex: 1, marginRight: 80 }}>
-            <Cards image="https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+            <Cards header='Lorem Ipsum 1' image="https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
           </div>
           <div style={{ flex: 1 }}>
-            <Cards image="https://images.pexels.com/photos/251225/pexels-photo-251225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+            <Cards header='Lorem Ipsum 2' image="https://images.pexels.com/photos/251225/pexels-photo-251225.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
           </div>
         </div>
       }

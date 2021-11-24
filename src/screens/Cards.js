@@ -16,7 +16,7 @@ export default function Cards(props) {
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                    Lorem Ipsum
+                    {props.header}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
