@@ -27,7 +27,7 @@ const Container = ({ props, navigate }) => {
         >
           <label style={uservalue}>{userName}</label>
           <label style={uservalue}>{userEmail}</label>
-          <label style={uservalue}>{userRole==='default'?'we update soon':userRole}</label>
+          <label style={uservalue}>{userRole === 'Default' ? 'We will update soon!' : userRole}</label>
           <label style={uservalue}>{userSalary}</label>
         </div>
       </div>
@@ -63,7 +63,6 @@ const Container = ({ props, navigate }) => {
 
 const Dashboard = (props) => {
   const navigate = useNavigate();
-  console.log(props);
   useEffect(() => {
     if (props.user === null) {
       navigate("/SignIn");

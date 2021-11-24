@@ -4,7 +4,7 @@
       "name": "shubham",
       "email": "c@gmail.com",
       "password": "1234",
-      "role": "default",
+      "role": "Default",
       "salary": 32400,
       "isEdit": false
     },
@@ -12,16 +12,16 @@
       "name": "vishal",
       "email": "a@gmail.com",
       "password": "1234",
-      "role": "default",
-      "salary": 32400,
+      "role": "Default",
+      "salary": 32500,
       "isEdit": false
     },
     {
       "name": "harsh",
       "email": "b@gmail.com",
       "password": "1234",
-      "role": "default",
-      "salary": 32400,
+      "role": "Default",
+      "salary": 32600,
       "isEdit": false
     }
   ]

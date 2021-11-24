@@ -45,9 +45,9 @@ const Form = ({ props }) => {
           <TextField
             id="outlined-basic"
             label="Username"
-            autoComplete="off"
             type="text"
             required
+            autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -56,7 +56,7 @@ const Form = ({ props }) => {
           <TextField
             id="outlined-basic"
             label="E-mail"
-            autoComplete="off"
+            autoComplete="email"
             type="email"
             required
             value={email}
@@ -69,6 +69,7 @@ const Form = ({ props }) => {
             label="Password"
             type="password"
             required
+            autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
