@@ -9,7 +9,6 @@ import {
   updateUser,
   currentuser,
   isUpdating,
-  pagination,
   searchingTxt,
   searchUser,
 } from "../actions";
@@ -285,7 +284,6 @@ export default connect(mapStateToProps, {
   deleteUser,
   updateUser,
   isUpdating,
-  pagination,
   searchingTxt,
   searchUser,
 })(Admin);
